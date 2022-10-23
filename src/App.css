@@ -1,5 +1,12 @@
 * {
-  font-family: "Karla", sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 7px;
+  /* border: solid black 2px;
+  border-radius: 15px; */
 }
