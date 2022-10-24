@@ -1,12 +1,39 @@
 * {
   margin: 0;
   padding: 0;
+  color: #202337;
+}
+
+body {
+  background-color: aliceblue;
 }
 
 .formulaire {
   display: flex;
   flex-direction: row;
+}
+
+.query-input {
+  background-color: aliceblue;
+  padding: 7px;
+  border: solid #123fe0 2px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.submit {
   padding: 5px 7px;
-  /* border: solid black 2px;
-  border-radius: 15px; */
+  border-bottom: solid #123fe0 2px;
+  border-top: solid #123fe0 2px;
+  background-color: none;
+  color: #123fe0;
+}
+
+.reset {
+  padding: 7px 7px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  border: solid #ef5c0a 2px;
+  background-color: #ef5c0a;
+  color: aliceblue;
 }
