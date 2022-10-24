@@ -33,9 +33,11 @@ const Nav = () => {
   return (
     <Header>
       <Navigation>
-        <Logo><Link to="/">Extralab</Link></Logo>
+        <Logo><Link style={{ 
+  textDecoration: "none" }} to="/">Extralab</Link></Logo>
         <List>
-          <li>Home</li>
+          <li><Link style={{ 
+  textDecoration: "none" }} to="/">Home</Link></li>
           <li>Favorites</li>
         </List>
       </Navigation>

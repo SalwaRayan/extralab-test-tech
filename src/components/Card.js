@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
 
-import Button from "./Button"
+import CardButton from "./CardButton"
 
 import { FilmCard, Header, Title, ImageBox, Plot, ButtonBox } from "./styledComponents/StyledCard"
 
@@ -30,12 +31,12 @@ const Card = (props) => {
         <Title>{movie.Year}</Title>
       </Header>
       <ImageBox>
-        <img src={movie.Poster} alt="I'm the cover" width={400} />
+        <img src={movie.Poster} alt={`Cover ${movie.Title}`} width={400} />
       </ImageBox>
       <hr />
       <ButtonBox>
-        <Button text="More" />
-        <Button text="Add to Favorite" />
+        <CardButton text="More" />
+        <CardButton text="Add to Favorite" />
       </ButtonBox>
     </FilmCard>
     )
@@ -44,7 +45,7 @@ const Card = (props) => {
   return (
     <FilmCard>
       <Header>
-        {movie.Title.length > 24 ? 
+        {infoMovie.Title.length > 24 ? 
           <Title>{infoMovie.Title.substring(0, 21)}...</Title>
           :
           <Title>{infoMovie.Title}</Title>
@@ -53,15 +54,14 @@ const Card = (props) => {
       </Header>
       {/* <hr /> */}
       <ImageBox>
-        <img src={infoMovie.Poster} alt="I'm the cover" width={400} />
+        <img src={infoMovie.Poster} alt={`Cover ${movie.Title}`} width={400} />
       </ImageBox>
       {/* <hr /> */}
-      {console.log("movie", infoMovie)}
       <Plot>{infoMovie.Plot}</Plot>
       <hr />
       <ButtonBox>
-        <Button text="More" />
-        <Button text="Add to Favorite" />
+        <Link style={{textDecoration: "none", color: "#123fe0"}} to={`/${infoMovie.imdbID}`}  imdbID={infoMovie.imdbID}><CardButton text="More"/></Link>
+        <CardButton text="Add to Favorite" />
       </ButtonBox>
     </FilmCard>
   )

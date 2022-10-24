@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import Card from '../components/Card'
 import { Formik, Form, Field } from 'formik'
 
-const Container = styled.section`
-  margin: 0 150px;
-`
+import { Container } from '../components/styledComponents/StyledPages'
 
 const MoviesContainer = styled.div`
   display: flex;
@@ -23,24 +21,42 @@ const Search = styled.div`
   }
 `
 
+const Filter = styled.button `
+  padding: 10px 15px;
+  color: #ef5c0a;
+  background-color: aliceblue;
+  border: 2px solid #ef5c0a;
+  border-radius: 10px;
+  margin: 10px 5px;
+`
+
 const Home = () => {
-  const [ movies, setMovies ] = useState([])
+  const [ list, setList ] = useState([])
   const [ error, setError ] = useState()
+  const [ filter, setFilter ] = useState()
+  const [ search, setSearch ] = useState()
 
   useEffect(() => {
-
-  }, [movies, error])
+  }, [list, error, filter])
     
-  const getMovies = async(query) => {
-    fetch(`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}`)
+  const getMovies = async(query, filter) => {
+    let link = ""
+    if (!filter) {
+      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}`
+    } else {
+      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}&type=${filter}`
+    }
+
+    fetch(link)
     .then(result => result.json())
     .then(data => {
       if(data.Response == "False") {
         return setError(data.Error)
       } else {
-        setMovies(data.Search)
+        setList(data.Search)
         setError(null)
       }
+      setSearch(query)
     })
   }
 
@@ -52,7 +68,7 @@ const Home = () => {
           initialValues={{ query: '' }}
           onSubmit={(values) => {
             const changedValue = values.query.replace(/[-\s]+/g, "+").replace(/^-/, '+').replace(/[^a-zA-Z0-9àç_èéù-]+/g, "+").toLowerCase() 
-            getMovies(changedValue)
+            getMovies(changedValue, filter)
           }}
         >
           {formikProps => (
@@ -83,12 +99,19 @@ const Home = () => {
         </Formik>
       </Search>
 
-      <h3>Filter</h3>
+      <Search>
+        <h3>Filter</h3>
+        <div>
+          <Filter onClick={() => {if (filter !== "movie") {setFilter("movie")} else {setFilter(null)} getMovies(search, filter)}}>Movie</Filter>
+          <Filter onClick={() => {if (filter !== "serie") {setFilter("serie")} else {setFilter(null)} getMovies(search, filter)}}>TV Show</Filter>
+        </div>
+      </Search>
+      
       <MoviesContainer>
         {error ?
-          <p>Movie not found</p>
+          <p>Movie or Serie not found</p>
           :
-          movies.map((movie, index) => {
+          list.map((movie, index) => {
             return <Card key={index} movie={movie} />
           })
         }
