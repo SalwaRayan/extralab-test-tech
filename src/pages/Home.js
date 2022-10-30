@@ -51,6 +51,7 @@ const Home = () => {
 
   const handleFilter = (type) => {
     let fltr = type
+
     if (filter === type) {
       fltr = null
       setFilter(null)
@@ -59,6 +60,7 @@ const Home = () => {
       setFilter(type)
     }
 
+    console.log(fltr)
     getMovies(query, fltr, page); 
     setPage(1)
   }
@@ -108,7 +110,7 @@ const Home = () => {
         <h3>Filter</h3>
         <div>
           <Filter onClick={() => handleFilter("movie")}>Movie</Filter>
-          <Filter onClick={() => handleFilter("serie")}>TV Show</Filter>
+          <Filter onClick={() => handleFilter("series")}>TV Show</Filter>
         </div>
       </Search>
       
