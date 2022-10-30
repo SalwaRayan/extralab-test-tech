@@ -109,8 +109,8 @@ const Home = () => {
       <Search>
         <h3>Filter</h3>
         <div>
-          <Filter onClick={() => handleFilter("movie")}>Movie</Filter>
-          <Filter onClick={() => handleFilter("series")}>TV Show</Filter>
+          <Filter onClick={() => handleFilter("movie")} disabled={list.length > 0 ? false : true} selected={filter} type="movie">Movie</Filter>
+          <Filter onClick={() => handleFilter("series")} disabled={list.length > 0 ? false : true} selected={filter} type="show">TV Show</Filter>
         </div>
       </Search>
       

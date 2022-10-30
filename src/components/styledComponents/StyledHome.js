@@ -18,8 +18,8 @@ const Search = styled.div`
 
 const Filter = styled.button `
   padding: 10px 15px;
-  color: #ef5c0a;
-  background-color: aliceblue;
+  color: ${props => (props.type == "movie" && props.selected == "movie") || (props.type == "show" && props.selected == "series") ? "aliceblue" : "#ef5c0a" };
+  background-color: ${props => (props.type == "movie" && props.selected == "movie") || (props.type == "show" && props.selected == "series") ? "#ef5c0a" : "aliceblue" };
   border: 2px solid #ef5c0a;
   border-radius: 10px;
   margin: 10px 5px;
