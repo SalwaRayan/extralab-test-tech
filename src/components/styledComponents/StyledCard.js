@@ -33,11 +33,13 @@ const ImageBox = styled.div`
 const Plot = styled.p`
   margin: 10px 0;
   text-align: justify;
+  height: 130px;
 `
 
 const ButtonBox = styled.div`
   padding-top: 5px;
   display: flex;
+  justify-content: center;
 `
 
 export {

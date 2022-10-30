@@ -40,6 +40,16 @@ const ButtonPage = styled.button `
   border: 2px solid #123fe0;
   color: #123fe0;
   background-color: aliceblue;
+  
+  :disabled {
+    color: #6ebaff;
+    border: 2px solid #6ebaff;
+  }
+  
+  :hover:enabled {
+    color: aliceblue;
+    background-color: #123fe0;
+  }
 `
 
 export {

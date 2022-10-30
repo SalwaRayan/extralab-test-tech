@@ -75,6 +75,7 @@ const Home = () => {
             const changedValue = values.query.replace(/[-\s]+/g, "+").replace(/^-/, '+').replace(/[^a-zA-Z0-9àç_èéù-]+/g, "+").toLowerCase() 
             setPage(1)
             setQuery(changedValue)
+            setFilter(null)
             getMovies(changedValue, filter, page)
           }}
         >

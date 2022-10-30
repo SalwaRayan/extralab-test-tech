@@ -3,22 +3,23 @@ import styled from "styled-components"
 
 const StyledButton = styled.button`
   background-color: #ffffff;
-  padding:  5px 10px;
+  padding:  10px 15px;
   margin-right: 10px;
+  width: 130px;
   border-radius: 7px;
-  border: solid #123fe0 1px;
   border: solid 1px ${props => 
-  props.text === "More" ? "#123fe0" : "#ef5c0a"};
-  color: ${(props) =>
-  props.text === "More" ? "#123fe0" : "aliceblue"};
+  props.text === "More" ? "#6ebaff" : "#ef5c0a"};
+  color: aliceblue;
   background-color: ${(props) =>
-  props.text === "More" ? "aliceblue" : "#ef5c0a"};
+  props.text === "More" ? "#6ebaff" : "#ef5c0a"};
 
   :hover {
+    border: solid 1px ${props => 
+    props.text === "More" ? "#123fe0" : "#ef5c0a"};
     background-color: ${props => 
-      props.text === "More" ? "#123fe0" : "#ef5c0a"};
+      props.text === "More" ? "aliceblue" : "#ef5c0a"};
     color: ${props => 
-      props.text === "More" ? "aliceblue" : "#aliceblue"};
+      props.text === "More" ? "#123fe0" : "aliceblue"};
   }
 `
 
