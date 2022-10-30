@@ -13,6 +13,13 @@ const StyledButton = styled.button`
   props.text === "More" ? "#123fe0" : "aliceblue"};
   background-color: ${(props) =>
   props.text === "More" ? "aliceblue" : "#ef5c0a"};
+
+  :hover {
+    background-color: ${props => 
+      props.text === "More" ? "#123fe0" : "#ef5c0a"};
+    color: ${props => 
+      props.text === "More" ? "aliceblue" : "#aliceblue"};
+  }
 `
 
 const Button = (props) => {

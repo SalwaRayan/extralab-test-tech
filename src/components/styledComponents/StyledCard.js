@@ -6,6 +6,7 @@ const FilmCard = styled.div`
   width: 350px;
   border: solid 2px black;
   border-radius: 10px;
+  align-content: space-between;
 `
 
 const Header = styled.div`

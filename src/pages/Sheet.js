@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
+import BubbleInfo from '../components/BubbleInfo'
 
 import { Container } from '../components/styledComponents/StyledPages'
-
-const Cover = styled.div `
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
+import { Cover, Image, TitleBox, InfoBox, BackgroundImage, BgBlur, Plot } from '../components/styledComponents/StyledSheet'
 
 const Sheet = () => {
   const { imdbID } = useParams()
@@ -31,21 +26,28 @@ const Sheet = () => {
   return (
     <>
       {console.log(info)}
-      <Container>
+      <BackgroundImage  image={info.Poster}> 
+        <BgBlur />
+      </BackgroundImage>
+      <Container type="Sheet">
         <Cover>
-          <img src={info.Poster} width={200} />
-          <div>
+          <Image src={info.Poster} width={200} />
+          <TitleBox>
             <h2>{info.Title}</h2>
-            <p>{info.Year}</p>
-          </div>
+            <p><b>{info.Year}</b></p>          
+          </TitleBox>
         </Cover>
-      </Container>
-      <Container>
         <div>
-          <div></div>
-          <div></div>
+          <InfoBox>
+            <BubbleInfo type={info.Type} released={info.Released} rated={info.Rated} runtime={info.Runtime} genre={info.Genre} language={info.Language} country={info.Country} />
+            <BubbleInfo director={info.Director} writer={info.Writer} actors={info.Actors} production={info.Production} />
+            <BubbleInfo ratings={info.Ratings} imdbRating={info.imdbRating} />
+          </InfoBox>
+          <InfoBox>
+            <Plot><b>Plot:</b> {info.Plot}</Plot>
+            <BubbleInfo awards={info.Awards} boxOffice={info.BoxOffice} />
+          </InfoBox>
         </div>
-        <p>{info.Plot}</p>
       </Container>
     </>
   );

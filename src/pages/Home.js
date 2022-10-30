@@ -4,47 +4,24 @@ import Card from '../components/Card'
 import { Formik, Form, Field } from 'formik'
 
 import { Container } from '../components/styledComponents/StyledPages'
-
-const MoviesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const Search = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h2 {
-    padding-bottom: 10px;
-  }
-`
-
-const Filter = styled.button `
-  padding: 10px 15px;
-  color: #ef5c0a;
-  background-color: aliceblue;
-  border: 2px solid #ef5c0a;
-  border-radius: 10px;
-  margin: 10px 5px;
-`
+import { MoviesContainer, Search, Filter, ButtonBox, ButtonPage } from '../components/styledComponents/StyledHome'
 
 const Home = () => {
   const [ list, setList ] = useState([])
   const [ error, setError ] = useState()
   const [ filter, setFilter ] = useState()
-  const [ search, setSearch ] = useState()
+  const [ page, setPage ] = useState(1)
+  const [ query, setQuery ] = useState()
 
   useEffect(() => {
-  }, [list, error, filter])
+  }, [list, error, filter, page])
     
-  const getMovies = async(query, filter) => {
+  const getMovies = async(query, filter, page) => {
     let link = ""
     if (!filter) {
-      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}`
+      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}&page=${page}`
     } else {
-      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}&type=${filter}`
+      link = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_APIKEY}&s=${query}&type=${filter}&page=${page}`
     }
 
     fetch(link)
@@ -56,19 +33,47 @@ const Home = () => {
         setList(data.Search)
         setError(null)
       }
-      setSearch(query)
     })
   }
 
+  const handleClickPage = (math) => {
+    let calcul = ""
+    
+    if (math == "+") {
+      calcul = page + 1
+    } else if (math == "-") {
+      calcul = page - 1
+    }
+
+    setPage(calcul) 
+    getMovies(query, filter, calcul)
+  }
+
+  const handleFilter = (type) => {
+    let fltr = type
+    if (filter === type) {
+      fltr = null
+      setFilter(null)
+    } else {
+      fltr = type
+      setFilter(type)
+    }
+
+    getMovies(query, fltr, page); 
+    setPage(1)
+  }
+
   return (
-    <Container>
+    <Container page="Home">
       <Search>
         <h2>Search</h2>
         <Formik
           initialValues={{ query: '' }}
           onSubmit={(values) => {
             const changedValue = values.query.replace(/[-\s]+/g, "+").replace(/^-/, '+').replace(/[^a-zA-Z0-9àç_èéù-]+/g, "+").toLowerCase() 
-            getMovies(changedValue, filter)
+            setPage(1)
+            setQuery(changedValue)
+            getMovies(changedValue, filter, page)
           }}
         >
           {formikProps => (
@@ -102,8 +107,8 @@ const Home = () => {
       <Search>
         <h3>Filter</h3>
         <div>
-          <Filter onClick={() => {if (filter !== "movie") {setFilter("movie")} else {setFilter(null)} getMovies(search, filter)}}>Movie</Filter>
-          <Filter onClick={() => {if (filter !== "serie") {setFilter("serie")} else {setFilter(null)} getMovies(search, filter)}}>TV Show</Filter>
+          <Filter onClick={() => handleFilter("movie")}>Movie</Filter>
+          <Filter onClick={() => handleFilter("serie")}>TV Show</Filter>
         </div>
       </Search>
       
@@ -116,6 +121,15 @@ const Home = () => {
           })
         }
         </MoviesContainer>
+        {list.length > 0 ? 
+        <ButtonBox>
+          <ButtonPage onClick={() => handleClickPage("-")} disabled={page == 1 ? true : false}>Precedent</ButtonPage>
+          <p style={{ color: "#ef5c0a", fontWeight: "bold" }}>{page}</p>
+          <ButtonPage onClick={() => handleClickPage("+")}>Next</ButtonPage>
+        </ButtonBox>
+        :
+        <></>
+        }
     </Container>
   )
 }
